@@ -7,6 +7,7 @@ VERSION 2.3
 NOTE, this code is a mix of the Spin language, and Assembly.
 The Assembly is what is doing the work (starting around line 1080)
 The Spin is effectively the API
+If used in Propeller IDE, the correct file extension would be .spin
 
 ••••••••••••••••••••••••••••••••••••••••••••••••••••••  Description ••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
 This is a 16-bit, 4-channel, sample based audio driver.
