@@ -4,6 +4,9 @@ AUTHOR: Eric Davisson
 Copyright (c) 2009 (MIT Terms of use; see end of file)
 LAST MODIFIED: 10.22.09
 VERSION 2.3
+NOTE, this code is a mix of the Spin language, and Assembly.
+The Assembly is what is doing the work (starting around line 1080)
+The Spin is effectively the API
 
 ••••••••••••••••••••••••••••••••••••••••••••••••••••••  Description ••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
 This is a 16-bit, 4-channel, sample based audio driver.
