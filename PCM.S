@@ -1,12 +1,12 @@
 {{
 PCM Driver - 1-16 bit (can be modified on the fly for effects)
-AUTHOR: Eric Davisson
+AUTHOR: XlogicX
 Copyright (c) 2009 (MIT Terms of use; see end of file)
-LAST MODIFIED: 10.22.09
-VERSION 2.3
+LAST MODIFIED: 9.24.15
+VERSION 2.5
 NOTE, this code is a mix of the Spin language, and Assembly.
-The Assembly is what is doing the work (starting around line 1080)
-The Spin is effectively the API
+The Assembly is what is doing the work
+The Spin is effectively the API to play a note
 If used in Propeller IDE, the correct file extension would be .spin
 
 ••••••••••••••••••••••••••••••••••••••••••••••••••••••  Description ••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
@@ -65,124 +65,9 @@ As you can see, I have conversions for bass, tenor, alto, and soprano notes. The
 
 ***************************************************   Change History   ***********************************************************
 
-Ver 0.1 [August '09]:
-  •This is an example of simple PWM, duty cycle is 2/3 on, hard coded
-Ver 0.2 [August '09]:
-  •added the ability to change duty cycle, resolution of 16
-Ver 0.3 [August '09]:
-  •made analog (PWM) assembly code independent. Think of it as a DAC on a cog
-Ver 0.4 [August '09]:
-  •Added PCM portion of assembly code, it's very basic; it just goes through and outputs each voltage listed in the index.
-  →Would like to clean up some of the looping in the PWM code, since I just found out about DJNZ.
-Ver 0.4.5 [August '09]:
-  •Used DJNZ jumps in PWM code.
-  •Cleaned up comments and formatting.
-  •Removed delay from VAR and PUB and passing to PWM, changed it to hard coded, as it should not change in run-time.
-  →I next need to re-add a delay to VAR, but this time to pass to PCM, this delay will be used to change the frequency of the wave.
-Ver 0.5 [9-3-2009]:
+Ver 2.5 [9-3-2009]:
   •Had to re-write everything when I found out about crta and frqa; it does PWM for me, seamlessly. The main assembly code now
    does PCM, successfully.
-Ver 0.6 [9-3-2009]:
-  •I decided to go from 8-bit with 64 samples to 16-bit with 128 samples. I even tried as much detail as 32-bit with 256 samples,
-   though it made a small difference, it wouldn't justify the 1k per sample cost. The current sampling method uses 256 bytes per
-   sample (previous method used 64 bytes). 8-bit with 64 samples had too many higher frequency harmonics when generating lower
-   frequencies, 16-bit at 128 samples reduced this problem significantly.
-Ver 0.7 [9-4-2009]:
-  •Now has two wave types in library (Sine and Saw).
-  •Also added the ability to pass a frequency value through the spin API.
-Ver 0.8 [9-4-2009]:
-  •I guess it's bad to have 16-bit audio samples stored in 32 bit long data (it wastes double the space). Added code to take a
-   long with 2 16-bit samples and split them up.
-  •Had to do some clock cycle balancing using quite a bit of nop's. I may squeeze extra instructions in there instead if needed.
-  •Doing this meant that I had to reformat my data index for the Sine and Saw waves as well.
-  •I also visually reformatted it with underscores to separate the words and fitting each wave's data into the screen by
-   wrapping (instead of all of the data trailing off far to the right).
-Ver 0.9 [9-4-2009]:
-  •Added Volume and Quality shifting to spin API. Volume calculations are simple so far; they use a shift right instruction.
-   The effect is halving the volume by each value higher. quality allows you to change the bit quality on the fly; you could
-   play a sample at 16-bit and flip it to 5-bit quality just for fun.
-Ver 1.0 [9-04-2009]:
-  •Yay, the big 1.0. This version adds a duration to the sample. Larger the value, the longer it plays.
-  •Also renamed program to PCM instead of PWM
-Ver 1.1 [9-05-2009]:
-  •Put wave tables in main memory as a DAT section right after CON section (starting at 0x18).
-  •Wrote a loading routine in ASM that takes wave from main memory and puts it in a local wave sample in cog memory. It takes
-   27.72 microseconds from initialization to hearing sound start (not bad).
-Ver 1.2 [9-05-2009]:
-  •Added the ability to select what wave shape to play. 1 is the smallest number to pick from. init time is now 41.25
-   microseconds.
-  •Also added triangle and hump shape.
-Ver 1.3a [9-09-2009]:
-  •Tested passing more values to ASM, for 2 channels
-Ver 1.3b [9-10-2009]:
-  •Played with dividing channels for a mixer (into fractions)
-Ver 1.3c [9-10-2009]:
-  •Added variables for 4 channels, combines all for channels in the mixer
-  •updated 1/3 fraction to 5/16 (instead of 3/8).
-Ver 1.3d [9-10-2009]:
-  •Cleaned out unused code and added comments. Verified in GEAR that data was moving as it should. I am going to have to flex
-   multiple cores at this point.
-Ver 1.3e [9-11-2009]:
-  •Created a working decompression engine. You can select which channels you want decompressed, the engine will take the shapes
-   for each channel (from shapes currently defined in spin) and decompresses them into main memory. It also does not waste time
-   decompressing all of the channels; it only decompresses the ones you tell it to.
-  •Also recleaned code; got rid of unused variables for the DeCom engine, added documentation comments.
-Ver 1.3f [9-17-2009]:
-  •Fixed bugs with DeCom engine. The engine should no longer need to be modified, it does what it needs to
-Ver 1.3g [9-18-2009]:
-  •Created Mixer engine, it only mixes for now, no special effects.
-Ver 1.4 [9-18-2009 to 9-19-2009]:
-  •Created PCM engine, works, has some glitches though.
-Ver 1.4b [9-23-2009]:
-  •Fixed indexing glitch in PCM, it was indexing 1 value too far in the wave shape tables
-Ver 1.4c [9-24-2009 to 9-26-2009]
-  •Fixed object glitch, memory table would get thrown down a 32-bit word when adding an OBJ, changed some of the hard coded
-   addresses to fix this. Added a 'silence' wave shape
-Ver 1.4d [9-26-2009]:
-  •Wrote some high level code to re-test everything, to make sure it all works before moving on.
-Ver 1.5 [9-26-2009]:
-  •Added volume and quality back in. Made quality apply to mixed value, instead of individual channels. It's a small sacrifice,
-   but still cool enough of an effect on the whole output, and it saves more clock cycles for the Mixer Engine.
-Ver 1.5b [10-03-2009]:
-  •Attempted to fix the volume and quality, since it didn't work, as I expected, I'm getting tired of crap not working.
-  •There were a couple of hard coded addresses I forgot to change.
-  •Also, the mixer engine was offsetting some of the cog variables instead of the main memory reference to the values in
-   initialization (forgot to add the _adr at the end of them).
-Ver 1.6 [10-03-2009]:
-  •Bugs fixed and verified from Version 1.5b. I had to use shl instead of shr for the quality effect. shl looked really
-   interesting on the O-Scope, I will have to 'listen' to it later to see what that sounds like. Although it has a side effect
-   of halfing volume, but that would have an easy fix as well.                 
-Ver 1.7 [10-03-2009]:
-  •Added API. Now have high level function such as PlayNote.
-Ver 1.8 [10-09-2009]:
-  •Made code self suficient; it can be used as an object in other code. I did this by finally removing the hard
-   coded references to the channel and wave data.
-  •I also made the audio pin number configurable. I used to have it hard coded to pin 31 (becuase it's cool to hear the chip
-   get programmed!)
-Ver 1.9 [10-16-2009]:
-  •Evened pitches on all channels via a silent wave burst on all channels on driver startup
-  •Also make a CON section for musial note mnemonics
-Ver 2.0 [10-17-2009]:
-  •Made duration parameter consistent; a duration of '100' will play just as long for an E note as a B note (this was not
-   previously the case :(     
-  •Made the duration resolution configurable in object startup.
-  •Added a tenor, alto, and soprano version of the saw wave
-Ver 2.1 [10-17-2009]:
-  •Added two effects; garble, and an OR mask
-Ver 2.2 [10-21-2009]:
-  •Added bass, tenor, alto, and soprano versions of noise wave
-  •Added alto and soprano versions of sine wave
-  •Added bass, tenor, alto, and soprano versions of square wave. I know, I know, I finally broke down and added these. I did
-   this to support higher level functions like DownNote that don't take quality as a parameter.
-  •Added DownNote function, documentation is included in function
-  •Added UpNote function, documentation is included in function  
-Ver 2.3 [10-22-2009]:
-  •Added MeshNotes, MashNotes, Wiggle, and Split functions
-Ver 2.4 [10-24-2009]:
-  •Updated CON table to exploit redundancies in the notes. 
-     
-wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww    Wish List   wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
-→Anything that pops in my head, I'm pretty satisfied with the driver for now.
 
 }}
 
@@ -988,94 +873,7 @@ PUB PlayNote (chan, pitch, vol, Wqual, garb, ors, dur, waveshape)
       shape4      := waveshape
       DecomFlags := %1000
       ch4_done   := 0
-
-PUB DownNote (d_note, d_shape, d_reps, d_hold, d_dur)
-{
-This function will take your note (d_note) of shape (d_shape) and do a drop sweep affect. It starts at a higher note
-and terminates on your specified note.
-
-•how high to start the note is defined by d_reps; which is really just a value for how many pitch lowerings will be
-done.
-•d_hold specifies how long to sustain each pitch.
-•d_dur specifies how long the final note should be maintained (and less noticably, how long each pitch in between
-should be maintained).
-}
-
-  if d_reps > d_note            '\ Checks to see if the note is out of range and adjusts
-    d_reps := d_note - 1        '/
-  d_note := d_note - d_reps                             
-  repeat d_reps                                  
-    PlayNote(1, d_note, 0, 0, 0, 0, d_dur, d_shape)
-    waitcnt(clkfreq / d_hold + cnt)              
-    d_note++  
-
-PUB UpNote (u_note, u_shape, u_reps, u_hold, u_dur)
-{
-This function will take your note (d_note) of shape (d_shape) and do a drop sweep affect. It starts at a higher note
-and terminates on your specified note.
-
-•how high to start the note is defined by d_reps; which is really just a value for how many pitch lowerings will be
-done.
-•d_hold specifies how long to sustain each pitch.
-•d_dur specifies how long the final note should be maintained (and less noticably, how long each pitch in between
-should be maintained).
-}
-
-  u_note := u_note + u_reps                             
-  repeat u_reps                                  
-    PlayNote(1, u_note, 0, 0, 0, 0, u_dur, u_shape)
-    waitcnt(clkfreq / u_hold + cnt)              
-    u_note--  
-
-PUB MeshNotes (m_note, m_shape1, m_shape2, m_reps, m_hold1, m_hold2)
-{
-This function alternates between two different wave shapes.
-}
-  repeat m_reps
-    PlayNote (1, m_note, 0, 0, 0, 0, m_hold1, m_shape1)
-    waitcnt(clkfreq / (dur_div / m_hold1) + cnt)
-    PlayNote (1, m_note, 0, 0, 0, 0, m_hold2, m_shape2)
-    waitcnt(clkfreq / (dur_div / m_hold2) + cnt)
-
-PUB MashNotes (ma_note, ma_vol1, ma_vol2, ma_shape1, ma_shape2, ma_dur)
-{
-This function is like MeshNotes, but on two channels. Instead of going back and forth between waves, it plays them
-both at the same time (the same note though). This allows the ability to play a note that has the depth of two
-wave shapes. For example, you could play a sawwave, sweetened with a quieter sinewave.
-}
-  PlayNote(1, ma_note, ma_vol1, 0, 0, 0, ma_dur, ma_shape1)   
-  PlayNote(2, ma_note, ma_vol2, 0, 0, 0, ma_dur, ma_shape2)
-
-PUB Wiggle (w_note, w_shape, w_inc1, w_inc2, w_dur, w_reps)
-  w_note2 := w_note
-  repeat w_reps
-    PlayNote (1, w_note, 0, 0, 0, 0, w_dur, w_shape)
-      w_note  := w_note + w_inc1
-    waitcnt(clkfreq / (dur_div / w_dur) + cnt)
-    PlayNote (1, w_note2, 0, 0, 0, 0, w_dur, w_shape)
-      w_note2 := w_note2 - w_inc2
-      if w_note2 < 1
-        w_note2 := 1
-    waitcnt(clkfreq / (dur_div / w_dur) + cnt)      
-
-PUB Split (s_note, s_shape1, s_shape2, s_reps, s_dur)
-{
-This function takes a note, and has it sweep up and down in frequency at the same time (using two channels). You can
-also specify different wave shapes for each channel (even though the starting note will be the same).
-
--This function has a bug, as the s_dur gets too low and the s_reps gets too high, the function seems to not terminate
-after the last iteration, like it somehow is in an endless loop with the last split values.
-}
-  split1 := s_note
-  split2 := s_note
-  repeat s_reps
-    PlayNote (1, split1, 0, 0, 0, 0, s_dur, s_shape1)  
-    PlayNote (2, split2, 0, 0, 0, 0, s_dur, s_shape2)
-    waitcnt(clkfreq / (dur_div / s_dur) + cnt)
-    split1++
-    split2--
-      if split2 < 1
-        split2 := 1
+      
 DAT
 
               org       0
@@ -1143,31 +941,30 @@ DeCom         mov       asmshape, par
 ''Main Loop
 :start        rdlong    flags_v, flags          'grab the flags from main memory
               ''are there requests on the flags?
-              mov       temp, #0                'put 0 in temp to compare with 
-              sub       temp, flags_v  wz       'z flag will get set if flags are all 0 (no requests)
+              cmp       flags_v, #0   wz
         if_z  jmp       #:start                 'restart/recheck if there are no requests
               ''do chan1?
 :_shape1      mov       temp, flags_v           'get a scratch flag register
               and       temp, #%0001            'mask it with first mask (0 bit)
-              sub       temp, #%0001  wz      'if 0 bit set, subtracting them will = 0, setting the z flag
+              cmp       temp, #%0001  wz      'if 0 bit set, subtracting them will = 0, setting the z flag
         if_z  jmp       #:shape1
 
               ''do chan2? 
 :_shape2      mov       temp, flags_v           'get another scratch flag register
               and       temp, #%0010            'mask it with the mask (1 bit)
-              sub       temp, #%0010  wz      'if 1 bit set, subtracting them will = 0, setting the z flag
+              cmp       temp, #%0010  wz      'if 1 bit set, subtracting them will = 0, setting the z flag
         if_z  jmp       #:shape2
 
               ''do chan3? 
 :_shape3      mov       temp, flags_v           'get another scratch flag register
               and       temp, #%0100            'mask it with the mask (2 bit)
-              sub       temp, #%0100  wz      'if 2 bit set, subtracting them will = 0, setting the z flag
+              cmp       temp, #%0100  wz      'if 2 bit set, subtracting them will = 0, setting the z flag
         if_z  jmp       #:shape3
 
               ''do chan4? 
 :_shape4      mov       temp, flags_v           'get another scratch flag register
               and       temp, #%1000            'mask it with the mask (3 bit)
-              sub       temp, #%1000  wz       'if 3 bit set, subtracting them will = 0, setting the z flag
+              cmp       temp, #%1000  wz       'if 3 bit set, subtracting them will = 0, setting the z flag
         if_z  jmp       #:shape4        
 
 :end          mov       flags_v, #0             'you're done, clear flags
