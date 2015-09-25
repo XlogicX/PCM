@@ -65,7 +65,7 @@ As you can see, I have conversions for bass, tenor, alto, and soprano notes. The
 
 ***************************************************   Change History   ***********************************************************
 
-Ver 2.5.1 [9-24-15]:
+Ver 2.5.1 [9-24-2015]:
   •Added 4 pulsewaves
 
 }}
@@ -621,6 +621,42 @@ sqaure        long      $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FF
               long      $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001
               long      $0000_0001                                                                                                            
 
+pulse1        long      $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF
+              long      $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $0000_0001, $0000_0001
+              long      $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001 
+              long      $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001
+              long      $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001
+              long      $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001
+              long      $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001
+              long      $0000_0001
+
+pulse2        long      $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $0000_0001
+              long      $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001
+              long      $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001 
+              long      $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001
+              long      $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001
+              long      $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001
+              long      $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001
+              long      $0000_0001
+
+pulse3        long      $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF
+              long      $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF
+              long      $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF
+              long      $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF
+              long      $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF
+              long      $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001
+              long      $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001
+              long      $0000_0001
+
+pulse4        long      $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF
+              long      $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF
+              long      $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF
+              long      $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF
+              long      $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF
+              long      $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF
+              long      $FFFF_FFFF, $FFFF_FFFF, $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001
+              long      $0000_0001                                           
+
 'lolz at wave that does nothing
 nothing       long      $0000_0000, $0000_0000, $0000_0000, $0000_0000, $0000_0000, $0000_0000, $0000_0000, $0000_0000, $0000_0000                         
               long      $0000_0000, $0000_0000, $0000_0000, $0000_0000, $0000_0000, $0000_0000, $0000_0000, $0000_0000, $0000_0000
@@ -667,7 +703,7 @@ sqaure_tenor  long      $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FF
               long      $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF
               long      $FFFF_FFFF, $FFFF_FFFF, $FFFF_FFFF, $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001
               long      $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001, $0000_0001
-              long      $0000_0001                                                                                                
+              long      $0000_0001                                                                                                              
 
 'Alto Waves
 saw_alto      long      $0200_0A00, $1200_1A00, $2200_2A00, $3200_3A00, $4200_4A00, $5200_5A00, $6200_6A00, $7200_7A00, $8200_8A00
