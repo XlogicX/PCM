@@ -27,9 +27,9 @@ pub main
 pcm.start (15, 100)
 
 'Loop through the instruments
-'SAW, SINE, TRIANGLE, HUMP, CLIPPED SINE, NOISE1, NOISE2, SQUARE
+'SAW, SINE, TRIANGLE, HUMP, CLIPPED SINE, NOISE1, NOISE2, SQUARE, PULSE1
 instrument := 1
-repeat while (instrument < 9)
+repeat while (instrument < 13)
   waitcnt(clkfreq / (2) + cnt)
   pcm.PlayNote (1, pcm#C3, 3, 0, 0, 0, 30, instrument)
   waitcnt(clkfreq / (2) + cnt)
@@ -101,7 +101,7 @@ DownNote (pcm#G1, 2, 8, 10, 80, 5)
 
 
 waitcnt(clkfreq / (1) + cnt)
-instrument := 8
+instrument := 12
 repeat while (instrument > 0)
   repeat 8
     pcm.PlayNote (1, pcm#C3, 2, 0, 0, 0, 2, instrument)  
