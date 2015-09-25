@@ -21,6 +21,8 @@ long    note
 long    volume
 long    loopcount
 long    instrument
+long    chan1_stack[100]
+long    chan2_stack[100] 
 
 pub main
 
@@ -74,31 +76,34 @@ repeat 8
 
 
 waitcnt(clkfreq / (1) + cnt)
-DownNote (pcm#C2, 2, 8, 10, 40, 5)
+DownNote (1, pcm#C2, 2, 8, 10, 40, 5)
 waitcnt(clkfreq / (10) + cnt)
-DownNote (pcm#C2, 2, 8, 10, 40, 5)
+DownNote (1, pcm#C2, 2, 8, 10, 40, 5)
 waitcnt(clkfreq / (10) + cnt)
-DownNote (pcm#C2, 2, 8, 10, 40, 5)
+DownNote (1, pcm#C2, 2, 8, 10, 40, 5)
 waitcnt(clkfreq / (10) + cnt)
-DownNote (pcm#C2, 2, 8, 10, 40, 5)
+DownNote (1, pcm#C2, 2, 8, 10, 40, 5)
 
 waitcnt(clkfreq / (2) + cnt)
-DownNote (pcm#C2, 2, 8, 10, 80, 5)
+DownNote (1, pcm#C2, 2, 8, 10, 80, 5)
 waitcnt(clkfreq / (20) + cnt)
-DownNote (pcm#B1, 2, 8, 10, 80, 5)
+DownNote (1, pcm#B1, 2, 8, 10, 80, 5)
 waitcnt(clkfreq / (20) + cnt)
-DownNote (pcm#A1s, 2, 8, 10, 80, 5)
+DownNote (1, pcm#A1s, 2, 8, 10, 80, 5)
 waitcnt(clkfreq / (20) + cnt)
-DownNote (pcm#A1, 2, 8, 10, 80, 5)
+DownNote (1, pcm#A1, 2, 8, 10, 80, 5)
 waitcnt(clkfreq / (20) + cnt)
-DownNote (pcm#G1s, 2, 8, 10, 80, 5)
+DownNote (1, pcm#G1s, 2, 8, 10, 80, 5)
 waitcnt(clkfreq / (20) + cnt)
-DownNote (pcm#G1, 2, 8, 10, 80, 5)
+DownNote (1, pcm#G1, 2, 8, 10, 80, 5)
 waitcnt(clkfreq / (20) + cnt)
-DownNote (pcm#G1s, 2, 8, 10, 80, 5)
+DownNote (1, pcm#G1s, 2, 8, 10, 80, 5)
 waitcnt(clkfreq / (20) + cnt)
-DownNote (pcm#G1, 2, 8, 10, 80, 5)
+DownNote (1, pcm#G1, 2, 8, 10, 80, 5)
 
+waitcnt(clkfreq / (1) + cnt)
+cognew (pcm.PlayNote (1, pcm#C3, 1, 0, 0, 0, 30, 2), @chan1_stack)
+cognew (DownNote (2, pcm#C2, 2, 1, 20, 80, 5), @chan2_stack)
 
 waitcnt(clkfreq / (1) + cnt)
 instrument := 12
@@ -162,10 +167,10 @@ repeat 16
   pcm.PlayNote (1, pcm#A4, 2, 0, 0, 0, 2, 8)
   waitcnt(clkfreq / (50) + cnt)
 
-DownNote (pcm#C0, 0, 2, 180, 30, 20)
+DownNote (1, pcm#C0, 0, 2, 180, 30, 20)
  
 
-PUB DownNote (d_note, d_vol, d_shape, d_reps, d_hold, d_dur)
+PUB DownNote (d_chan, d_note, d_vol, d_shape, d_reps, d_hold, d_dur)
 {
 This function will take your note (d_note) of shape (d_shape) and do a drop sweep affect. It starts at a higher note
 and terminates on your specified note.
@@ -181,7 +186,7 @@ should be maintained).
     d_reps := d_note - 1        '/
   d_note := d_note - d_reps                             
   repeat d_reps                                  
-    pcm.PlayNote(1, d_note, d_vol, 0, 0, 0, d_dur, d_shape)
+    pcm.PlayNote(d_chan, d_note, d_vol, 0, 0, 0, d_dur, d_shape)
     waitcnt(clkfreq / d_hold + cnt)              
     d_note++         
 
