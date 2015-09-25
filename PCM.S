@@ -3,7 +3,7 @@ PCM Driver - 1-16 bit (can be modified on the fly for effects)
 AUTHOR: XlogicX
 Copyright (c) 2009 (MIT Terms of use; see end of file)
 LAST MODIFIED: 9.24.15
-VERSION 2.5
+VERSION 2.5.1
 NOTE, this code is a mix of the Spin language, and Assembly.
 The Assembly is what is doing the work
 The Spin is effectively the API to play a note
@@ -65,9 +65,8 @@ As you can see, I have conversions for bass, tenor, alto, and soprano notes. The
 
 ***************************************************   Change History   ***********************************************************
 
-Ver 2.5 [9-3-2009]:
-  •Had to re-write everything when I found out about crta and frqa; it does PWM for me, seamlessly. The main assembly code now
-   does PCM, successfully.
+Ver 2.5.1 [9-24-15]:
+  •Added 4 pulsewaves
 
 }}
 
